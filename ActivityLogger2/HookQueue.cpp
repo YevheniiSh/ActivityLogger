@@ -14,6 +14,8 @@ void HookQueue::static_add(Hook& hook)
 	staticQueue.enqueue(std::move(hook));
 }
 
+//void HookQueue::
+
 moodycamel::BlockingConcurrentQueue<Hook>& HookQueue::getQueue()
 {
 	return staticQueue;
