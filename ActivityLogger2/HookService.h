@@ -1,3 +1,4 @@
 #pragma once
 
-void WINAPI runActivityLogger();
+void WINAPI runKeyLogger();
+void WINAPI runMouseLogger();

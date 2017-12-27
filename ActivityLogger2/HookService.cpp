@@ -9,7 +9,7 @@ LRESULT WINAPI keyLogger(int nCode, WPARAM wParam, LPARAM lParam)
 {
 	if ((nCode == HC_ACTION) && ((wParam == WM_SYSKEYDOWN) || (wParam == WM_KEYDOWN)))
 	{
-		Hook hook{ nCode, wParam, lParam, Keyboard};
+		Hook hook{nCode, wParam, lParam, Keyboard};
 		HookQueue::static_add(hook);
 		//		KBDLLHOOKSTRUCT hooked_key = *((KBDLLHOOKSTRUCT *)lParam);
 	}
@@ -48,14 +48,18 @@ void msgLoop()
 	}
 }
 
-void WINAPI runActivityLogger()
+void WINAPI runKeyLogger()
 {
 	const HINSTANCE hins = GetModuleHandle(nullptr);
 	hKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, HOOKPROC(keyLogger), hins, 0);
-	hMouseHook = SetWindowsHookEx(WH_MOUSE_LL, HOOKPROC(mouseLogger), hins, 0);
-
 	msgLoop();
-
 	UnhookWindowsHookEx(hKeyboardHook);
+}
+
+void WINAPI runMouseLogger()
+{
+	const HINSTANCE hins = GetModuleHandle(nullptr);
+	hMouseHook = SetWindowsHookEx(WH_MOUSE_LL, HOOKPROC(mouseLogger), hins, 0);
+	msgLoop();
 	UnhookWindowsHookEx(hMouseHook);
 }
