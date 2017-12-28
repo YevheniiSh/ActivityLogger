@@ -1,2 +1,2 @@
 #pragma once
-enum HookType { Mouse, Keyboard };
+enum HookType { Mouse, Keyboard, Activate };

@@ -5,10 +5,9 @@
 class HookQueue
 {
 public:
-	void add(Hook& hook);
-	static void static_add(Hook& hook);
+	static void add(Hook& hook);
 	static moodycamel::BlockingConcurrentQueue<Hook>& getQueue();
 private:
-	moodycamel::BlockingConcurrentQueue<Hook> queue;
+	inline static moodycamel::BlockingConcurrentQueue<Hook> queue;
 	HookQueue() = default;
 };

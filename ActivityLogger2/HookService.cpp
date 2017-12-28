@@ -7,31 +7,40 @@ HHOOK hMouseHook;
 
 LRESULT WINAPI keyLogger(int nCode, WPARAM wParam, LPARAM lParam)
 {
-	if ((nCode == HC_ACTION) && ((wParam == WM_SYSKEYDOWN) || (wParam == WM_KEYDOWN)))
+	if (nCode < 0) return CallNextHookEx(hMouseHook, nCode, wParam, lParam);
+
+	if (wParam == WM_KEYUP)
 	{
 		Hook hook{nCode, wParam, lParam, Keyboard};
-		HookQueue::static_add(hook);
-		//		KBDLLHOOKSTRUCT hooked_key = *((KBDLLHOOKSTRUCT *)lParam);
+		HookQueue::add(hook);
 	}
 	return CallNextHookEx(hKeyboardHook, nCode, wParam, lParam);
 }
 
 LRESULT WINAPI mouseLogger(int nCode, WPARAM wParam, LPARAM lParam)
 {
-	Hook hook{nCode, wParam, lParam, Mouse};
+	if (nCode < 0) return CallNextHookEx(hMouseHook, nCode, wParam, lParam);
 
+	if ((wParam == WM_LBUTTONUP || wParam == WM_LBUTTONDOWN) && GetAsyncKeyState(VK_CONTROL) & 0x8000)
+	{
+		Hook hook{nCode, wParam, lParam, Activate};
+		HookQueue::add(hook);
+		return CallNextHookEx(hMouseHook, nCode, wParam, lParam);
+	}
+
+	Hook hook{nCode, wParam, lParam, Mouse};
 	switch (wParam)
 	{
 	case WM_LBUTTONDOWN:
-		HookQueue::static_add(hook);
+		HookQueue::add(hook);
 		break;
 
 	case WM_RBUTTONDOWN:
-		HookQueue::static_add(hook);
+		HookQueue::add(hook);
 		break;
 
 	case WM_MOUSEWHEEL:
-		HookQueue::static_add(hook);
+		HookQueue::add(hook);
 		break;
 	}
 
